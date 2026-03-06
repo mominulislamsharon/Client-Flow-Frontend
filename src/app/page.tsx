@@ -1,9 +1,11 @@
- const Home = () => {
-  return(
-    <>
-      <h1>Home</h1>
-    </>
-  )
- }
+import React from 'react';
 
- export default Home;
+const Home = () => {
+  return (
+    <div>
+      ss
+    </div>
+  );
+};
+
+export default Home;
