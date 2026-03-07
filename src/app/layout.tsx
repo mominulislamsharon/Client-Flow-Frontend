@@ -30,17 +30,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex min-h-screen bg-slate-950">
-          {/* sidebar */}
-          <Sidebar />
-          {/* main content */}
-          <div className="flex-1 flex flex-col">
-            <Navbar />
-          </div>
-          {/* <main className="flex-1">{children}</main> */}
-        </div>
         <ReactQueryProvider>
-          <div className="p-6">{children}</div>
+          <div className="flex min-h-screen bg-slate-950">
+            {/* sidebar */}
+            <Sidebar />
+            {/* main content */}
+            <div className="flex-1 flex flex-col">
+              <Navbar />
+              <main className="p-6">{children}</main>
+            </div>
+          </div>
         </ReactQueryProvider>
       </body>
     </html>
