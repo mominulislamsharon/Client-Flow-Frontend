@@ -31,24 +31,27 @@ const CreateCleintModal = () => {
       <DialogTrigger asChild>
         <Button variant="default">Add Client</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add New Client</DialogTitle>
+          <DialogTitle className="text-slate-800">Add New Client</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-3 mt-4">
           <Input
-            placeholder="name"
+            placeholder="Name"
+            className="text-slate-800 font-semibold"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <Input
-            placeholder="email"
+            placeholder="Email"
+            className="text-slate-800 font-semibold"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
-            placeholder="phone"
+            placeholder="Phone"
+            className="text-slate-800 font-semibold"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />

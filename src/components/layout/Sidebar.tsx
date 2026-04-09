@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <aside className="w-64 border-r border-slate-800 bg-slate-900 p-5">
+    <aside className="hidden md:block w-64 shrink-0 border-r border-slate-800 bg-slate-900 p-5">
       <h1 className="text-xl font-bold mb-8">ClientFlow</h1>
       <nav className="space-y-3">
         <Link

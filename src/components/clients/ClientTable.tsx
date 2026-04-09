@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { Client } from "@/types/client";
 import {
   Table,
   TableBody,
@@ -10,7 +12,8 @@ import {
 import useClients from "@/hooks/useClients";
 
 const ClientTable = () => {
-  const { data: clients, isLoading, isError } = useClients();
+  const { data, isLoading, isError } = useClients() as any;
+  const clients: Client[] = data?.data || [];
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading clients</div>;
