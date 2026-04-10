@@ -17,14 +17,16 @@ const CreateCleintModal = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [company, setCompany] = useState("");
   const { createClient } = useClients();
 
   const handleSubmit = () => {
-    createClient.mutate({ name, email, phone });
+    createClient.mutate({ name, email, phone, company });
     setOpen(false);
     setName("");
     setEmail("");
     setPhone("");
+    setCompany("");
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -54,6 +56,12 @@ const CreateCleintModal = () => {
             className="text-slate-800 font-semibold"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+          />
+          <Input
+            placeholder="Company"
+            className="text-slate-800 font-semibold"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
           />
           <Button onClick={handleSubmit} className="mt-2">
             Create
