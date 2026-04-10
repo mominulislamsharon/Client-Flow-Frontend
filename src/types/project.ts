@@ -4,6 +4,7 @@ export interface Project {
   description: string;
   status: "ongoing" | "completed" | "paused";
   budget?: number;
+  progress?: number;
   deadline?: string;
   client: {
     id: string;
