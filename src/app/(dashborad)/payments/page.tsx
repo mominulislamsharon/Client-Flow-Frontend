@@ -103,7 +103,7 @@ const PaymentsPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex min-w-0 max-w-full flex-col gap-6">
  
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -161,24 +161,38 @@ const PaymentsPage = () => {
 
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-12">
         
-        <div className="lg:col-span-8 flex flex-col">
-          <Card className="bg-slate-900 border-slate-800 text-slate-100 flex-1">
+        <div className="flex min-w-0 flex-col lg:col-span-8">
+          <Card className="flex min-w-0 flex-1 flex-col overflow-hidden border-slate-800 bg-slate-900 text-slate-100">
             <CardHeader className="border-b border-slate-800/50 pb-4">
               <CardTitle className="text-lg">Payment History</CardTitle>
             </CardHeader>
-            <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <Table className="w-full text-sm text-left">
+            <CardContent className="min-w-0 p-0">
+                <Table
+                  containerClassName="overflow-x-hidden"
+                  className="table-fixed text-left text-sm"
+                >
                   <TableHeader className="bg-slate-800/20">
                     <TableRow className="border-b border-slate-800 hover:bg-transparent">
-                      <TableHead className="text-slate-400 font-medium px-4 md:px-6 py-4">Client</TableHead>
-                      <TableHead className="text-slate-400 font-medium px-6 py-4 hidden sm:table-cell">Invoice</TableHead>
-                      <TableHead className="text-slate-400 font-medium px-6 py-4">Amount</TableHead>
-                      <TableHead className="text-slate-400 font-medium px-6 py-4 hidden sm:table-cell">Date</TableHead>
-                      <TableHead className="text-slate-400 font-medium px-6 py-4 hidden md:table-cell">Method</TableHead>
-                      <TableHead className="text-slate-400 font-medium px-6 py-4 hidden sm:table-cell">Status</TableHead>
+                      <TableHead className="w-[30%] px-3 py-3 font-medium text-slate-400 md:w-[22%] md:px-6 md:py-4">
+                        Client
+                      </TableHead>
+                      <TableHead className="hidden w-[12%] px-3 py-3 font-medium text-slate-400 sm:table-cell md:px-6 md:py-4">
+                        Invoice
+                      </TableHead>
+                      <TableHead className="w-[22%] px-3 py-3 font-medium whitespace-nowrap text-slate-400 md:w-[12%] md:px-6 md:py-4">
+                        Amount
+                      </TableHead>
+                      <TableHead className="hidden w-[10%] px-3 py-3 font-medium text-slate-400 sm:table-cell md:px-6 md:py-4">
+                        Date
+                      </TableHead>
+                      <TableHead className="hidden w-[18%] px-3 py-3 font-medium text-slate-400 md:table-cell md:px-6 md:py-4">
+                        Method
+                      </TableHead>
+                      <TableHead className="hidden w-[12%] px-3 py-3 font-medium text-slate-400 sm:table-cell md:px-6 md:py-4">
+                        Status
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -198,13 +212,15 @@ const PaymentsPage = () => {
                         return (
                           <TableRow key={p._id || p.id} className="border-b border-slate-800/50 hover:bg-slate-800/20">
                             
-                            <TableCell className="px-4 md:px-6 py-4 font-medium text-slate-200">
+                            <TableCell className="min-w-0 px-3 py-3 font-medium break-words whitespace-normal text-slate-200 md:px-6 md:py-4">
                               <div className="flex flex-col">
-                                <div className="flex items-center gap-2">
-                                  <div className="w-6 h-6 shrink-0 rounded-full bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-400">
+                                <div className="flex min-w-0 items-start gap-2">
+                                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-800 text-[10px] font-bold text-slate-400">
                                     {clientInfo?.name?.substring(0, 2).toUpperCase() || "??"}
                                   </div>
-                                  <span>{clientInfo?.name || "Unknown"}</span>
+                                  <span className="min-w-0 leading-snug break-words">
+                                    {clientInfo?.name || "Unknown"}
+                                  </span>
                                 </div>
                                 <div className="flex flex-col gap-1 mt-2 sm:hidden">
                                   <span className="text-xs text-slate-500">{invoiceCode} • {dateString}</span>
@@ -226,26 +242,29 @@ const PaymentsPage = () => {
                               </div>
                             </TableCell>
 
-                            <TableCell className="px-6 py-4 text-slate-400 hidden sm:table-cell">
-                              {invoiceCode}
+                            <TableCell className="hidden px-3 py-3 text-slate-400 sm:table-cell md:px-6 md:py-4">
+                              <span className="block min-w-0 break-all text-xs leading-snug">
+                                {invoiceCode}
+                              </span>
                             </TableCell>
 
-                            <TableCell className="px-6 py-4 font-semibold text-slate-200">
+                            <TableCell className="px-3 py-3 font-semibold whitespace-nowrap tabular-nums text-slate-200 md:px-6 md:py-4">
                               ৳{p.amount.toLocaleString()}
                             </TableCell>
 
-                            <TableCell className="px-6 py-4 text-slate-400 hidden sm:table-cell">
+                            <TableCell className="hidden px-3 py-3 text-slate-400 sm:table-cell md:px-6 md:py-4">
                               {dateString}
                             </TableCell>
 
-                            <TableCell className="px-6 py-4 text-slate-400 hidden md:table-cell">
+                            <TableCell className="hidden min-w-0 px-3 py-3 break-words whitespace-normal text-slate-400 md:table-cell md:px-6 md:py-4">
                               {p.method || "-"}
                             </TableCell>
 
-                            <TableCell className="px-6 py-4 hidden sm:table-cell">
+                            <TableCell className="hidden px-3 py-3 sm:table-cell md:px-6 md:py-4">
                               <Badge 
                                 variant="outline"
                                 className={`
+                                  max-w-full whitespace-normal text-xs
                                   ${p.status === 'paid' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : ''}
                                   ${p.status === 'unpaid' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' : ''}
                                   ${p.status === 'partial' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : ''}
@@ -262,12 +281,11 @@ const PaymentsPage = () => {
                     )}
                   </TableBody>
                 </Table>
-              </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="lg:col-span-4 flex flex-col gap-6">
+        <div className="flex min-w-0 flex-col gap-6 lg:col-span-4">
           
           <Card className="bg-slate-900 border-slate-800 text-slate-100">
             <CardHeader className="pb-4">

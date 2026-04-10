@@ -40,9 +40,9 @@ const DashboardPage = () => {
   const activeProjectsList = projects.filter((p: any) => p.status === "ongoing").slice(0, 4);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex min-w-0 max-w-full flex-col gap-6">
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         
         <Card className="bg-slate-900 border-slate-800 text-slate-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -93,71 +93,130 @@ const DashboardPage = () => {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-3">
 
         {/* Recent Clients/Projects Table */}
-        <Card className="lg:col-span-2 bg-slate-900 border-slate-800 text-slate-100 flex flex-col">
-          <CardHeader className="flex flex-row items-center justify-between border-b border-slate-800/50 pb-4">
-            <CardTitle className="text-lg">Recent Projects</CardTitle>
-            <Link href="/projects" className="text-sm text-blue-500 hover:underline">View all →</Link>
+        <Card className="flex min-w-0 flex-col overflow-hidden border-slate-800 bg-slate-900 text-slate-100 lg:col-span-2">
+          <CardHeader className="flex flex-row items-center justify-between gap-3 border-b border-slate-800/50 pb-4 px-4 sm:px-6">
+            <CardTitle className="text-lg min-w-0 shrink">Recent Projects</CardTitle>
+            <Link
+              href="/projects"
+              className="text-sm text-blue-500 hover:underline shrink-0 whitespace-nowrap"
+            >
+              View all →
+            </Link>
           </CardHeader>
           <CardContent className="p-0 flex-1">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="text-xs text-slate-400 uppercase bg-slate-800/20 border-b border-slate-800">
-                  <tr>
-                    <th className="px-6 py-4 font-medium">Client</th>
-                    <th className="px-6 py-4 font-medium">Project</th>
-                    <th className="px-6 py-4 font-medium">Status</th>
-                    <th className="px-6 py-4 font-medium">Budget</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentProjects.length === 0 ? (
-                     <tr>
-                       <td colSpan={4} className="text-center py-8 text-slate-500">No projects found.</td>
-                     </tr>
-                  ) : (
-                    recentProjects.map((proj: any) => {
-                      const clientName = proj.client?.name || "Unknown Client";
-                      
-                      return (
-                        <tr key={proj._id || proj.id} className="border-b border-slate-800/50 hover:bg-slate-800/20 last:border-0">
-                          <td className="px-6 py-4 font-medium flex items-center gap-3 text-slate-200">
-                            <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-400 shrink-0">
-                              {clientName.substring(0, 2).toUpperCase()}
-                            </div>
-                            {clientName}
-                          </td>
-                          <td className="px-6 py-4 text-slate-300 font-medium">
-                            {proj.title}
-                          </td>
-                          <td className="px-6 py-4">
-                            <Badge
-                              variant="outline"
-                              className={`
-                                ${proj.status === "ongoing" && "bg-blue-500/10 text-blue-400 border-blue-500/20"}
-                                ${proj.status === "paused" && "bg-orange-500/10 text-orange-400 border-orange-500/20"}
-                                ${proj.status === "completed" && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"}
-                              `}
-                            >
-                              {proj.status.charAt(0).toUpperCase() + proj.status.slice(1)}
-                            </Badge>
-                          </td>
-                          <td className="px-6 py-4 text-slate-300 font-medium">
-                             ৳{proj.budget ? proj.budget.toLocaleString() : 0}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
-            </div>
+            {recentProjects.length === 0 ? (
+              <p className="text-center py-8 text-slate-500 px-4">No projects found.</p>
+            ) : (
+              <>
+                <ul className="md:hidden divide-y divide-slate-800/50">
+                  {recentProjects.map((proj: any) => {
+                    const clientName = proj.client?.name || "Unknown Client";
+                    const budget = proj.budget ? proj.budget.toLocaleString() : "0";
+                    return (
+                      <li key={proj._id || proj.id} className="px-4 py-4 space-y-3">
+                        <div className="flex items-start gap-3 min-w-0">
+                          <div className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-400 shrink-0">
+                            {clientName.substring(0, 2).toUpperCase()}
+                          </div>
+                          <div className="min-w-0 flex-1 space-y-1">
+                            <p className="text-sm font-medium text-slate-200 break-words">
+                              {clientName}
+                            </p>
+                            <p className="text-sm text-slate-400 break-words">{proj.title}</p>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap items-center justify-between gap-2 pl-12">
+                          <Badge
+                            variant="outline"
+                            className={`
+                              shrink-0
+                              ${proj.status === "ongoing" && "bg-blue-500/10 text-blue-400 border-blue-500/20"}
+                              ${proj.status === "paused" && "bg-orange-500/10 text-orange-400 border-orange-500/20"}
+                              ${proj.status === "completed" && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"}
+                            `}
+                          >
+                            {proj.status.charAt(0).toUpperCase() + proj.status.slice(1)}
+                          </Badge>
+                          <span className="text-sm font-medium text-slate-300 tabular-nums">
+                            ৳{budget}
+                          </span>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <div className="hidden min-w-0 max-w-full md:block">
+                  <table className="w-full table-fixed border-collapse text-left text-sm">
+                    <thead className="text-xs text-slate-400 uppercase bg-slate-800/20 border-b border-slate-800">
+                      <tr>
+                        <th className="w-[28%] px-3 py-3 font-medium md:px-6 md:py-4">
+                          Client
+                        </th>
+                        <th className="w-[36%] px-3 py-3 font-medium md:px-6 md:py-4">
+                          Project
+                        </th>
+                        <th className="w-[20%] px-3 py-3 font-medium md:px-6 md:py-4">
+                          Status
+                        </th>
+                        <th className="w-[16%] px-3 py-3 text-right font-medium md:px-6 md:py-4">
+                          Budget
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {recentProjects.map((proj: any) => {
+                        const clientName = proj.client?.name || "Unknown Client";
+
+                        return (
+                          <tr
+                            key={proj._id || proj.id}
+                            className="border-b border-slate-800/50 hover:bg-slate-800/20 last:border-0"
+                          >
+                            <td className="min-w-0 px-3 py-3 align-middle text-slate-200 md:px-6 md:py-4">
+                              <div className="flex min-w-0 items-start gap-2 md:items-center md:gap-3">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-800 text-xs font-bold text-slate-400">
+                                  {clientName.substring(0, 2).toUpperCase()}
+                                </div>
+                                <span className="min-w-0 break-words font-medium leading-snug">
+                                  {clientName}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="min-w-0 px-3 py-3 align-middle text-sm font-medium leading-snug break-words text-slate-300 md:px-6 md:py-4">
+                              {proj.title}
+                            </td>
+                            <td className="min-w-0 px-3 py-3 align-middle md:px-6 md:py-4">
+                              <Badge
+                                variant="outline"
+                                className={`
+                                  max-w-full whitespace-normal text-xs
+                                  ${proj.status === "ongoing" && "bg-blue-500/10 text-blue-400 border-blue-500/20"}
+                                  ${proj.status === "paused" && "bg-orange-500/10 text-orange-400 border-orange-500/20"}
+                                  ${proj.status === "completed" && "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"}
+                                `}
+                              >
+                                {proj.status.charAt(0).toUpperCase() + proj.status.slice(1)}
+                              </Badge>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-3 text-right align-middle text-sm font-medium tabular-nums text-slate-300 md:px-6 md:py-4">
+                              ৳{proj.budget ? proj.budget.toLocaleString() : 0}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex min-w-0 flex-col gap-6">
 
           <Card className="bg-slate-900 border-slate-800 text-slate-100">
             <CardHeader className="flex flex-row items-center justify-between pb-4">

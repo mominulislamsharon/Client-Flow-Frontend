@@ -25,7 +25,7 @@ const CreateProjectModal = () => {
   const { createProject } = useProject();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: clientsData } = useClients() as any;
-  const clients = clientsData?.data || [];
+  const clients = clientsData || [];
 
   const handleSubmit = () => {
     if (!title || !clientId) return;

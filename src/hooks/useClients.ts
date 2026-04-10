@@ -10,7 +10,7 @@ const useClients = () => {
     queryKey: ["clients"],
     queryFn: async () => {
       const { data } = await api.get("/clients");
-      return data;
+      return data?.data || [];
     },
   });
 

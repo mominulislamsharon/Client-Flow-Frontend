@@ -20,7 +20,7 @@ interface ClientTableProps {
 
 const ClientTable = ({ searchTerm = "" }: ClientTableProps) => {
   const { data, isLoading, isError } = useClients() as any;
-  const clients: Client[] = data?.data || [];
+  const clients: Client[] = data || [];
 
   const filteredClients = clients.filter(client => {
     const term = searchTerm.toLowerCase();
